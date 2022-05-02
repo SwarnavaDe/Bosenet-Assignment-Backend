@@ -50,14 +50,16 @@ public class ContributorService {
 			Date startOnboardDate = sdformat.parse(startOnboardDateRequest);
 		    Date endOnboardDate = sdformat.parse(endOnboardDateRequest);
 			//getting all contributors that belong to a particular on-board date range
-			contributors = contributorRepository.findAll().stream().filter(contributor->
-				contributor.getOnboardDate().compareTo(startOnboardDate)>=0 && contributor.getOnboardDate().compareTo(endOnboardDate)<=0
-			).collect(Collectors.toList());
+			contributors = contributorRepository.findAll().stream()
+										.filter(contributor->contributor.getOnboardDate()
+																		.compareTo(startOnboardDate)>=0 && contributor.getOnboardDate().compareTo(endOnboardDate)<=0)
+										.collect(Collectors.toList());
 		}
 		
 		List<ContributorResponseDTO> contributorResponses = new ArrayList<>();
 		
 		for(Contributor contributor:contributors) {
+			//creating the custom contributor object
 			ContributorResponseDTO newContributorResponseDTO = new ContributorResponseDTO();
 			newContributorResponseDTO.setContributor(contributor);
 			//getting team names of a contributor
@@ -66,7 +68,7 @@ public class ContributorService {
 			newContributorResponseDTO.setProjectNames(getProjectNamesOfContributor(contributor));
 			contributorResponses.add(newContributorResponseDTO);
 		}
-		return contributorResponses;
+		return contributorResponses; 
 	}
 	
 	private List<String> getProjectNamesOfContributor(Contributor contributor){

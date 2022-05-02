@@ -52,7 +52,7 @@ public class ContributorController {
 	public ResponseEntity<List<Contributor>> getAllContributors(){
 		log.info("In get all contributors controller");
 		return new ResponseEntity<>(contributorService.getAllContributors(),HttpStatus.OK);
-	}
+	} 
 	
 	@PutMapping("/teams/add")
 	public ResponseEntity<ResponseDTO> assignContributorToTeam(@RequestBody TeamContributorsDTO teamContributorsDTO){

@@ -36,13 +36,17 @@ public class TeamService {
 		
 		log.info("In assigning contributors to a team service");
 		
+		//getting the team entity based on team ID
 		Team teamToUpdate = teamRepository.findById(team.getId())
 										  .orElseThrow(()-> new TeamNotFoundException("Team is not found"));
+		
 		for(Contributor contributor:contributors) {
-			if(teamToUpdate.getContributors().stream().filter(x->x.getId()==contributor.getId()).collect(Collectors.toList()).size() == 0){
+			//checking and skipping if a contributor to be added is already present in that particular team
+			if(teamToUpdate.getContributors().stream().filter(contributorInStream->contributorInStream.getId()==contributor.getId()).collect(Collectors.toList()).size() == 0){
 				teamToUpdate.assignContributor(contributor);	
 			}
 		}
+		
 		teamRepository.save(teamToUpdate);
 	}
 	
@@ -56,7 +60,7 @@ public class TeamService {
 		
 		projectToUpdate.setTeam(team);
 		projectRepository.save(projectToUpdate);
-		
+		 
 	}
 
 	public Team getTeamById(Long id) throws TeamNotFoundException {

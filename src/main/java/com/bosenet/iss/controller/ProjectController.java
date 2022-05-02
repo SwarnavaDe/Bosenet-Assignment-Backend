@@ -29,4 +29,4 @@ public class ProjectController {
 		log.info("In get all projects controller");
 		return new ResponseEntity<>(projectService.getAllProjects(),HttpStatus.OK);
 	}
-}
+} 
